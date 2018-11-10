@@ -23,7 +23,7 @@ csvWriter = csv.writer(csvFile)
 
 for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
 
-    # Write a row to the CSV file. I use encode UTF-8
+    # Write a row to the CSV file
     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
     print(tweet.created_at, tweet.text)
 csvFile.close()
