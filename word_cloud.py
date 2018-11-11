@@ -15,7 +15,7 @@ from wordcloud import WordCloud
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 # Read the whole text.
-text = open(path.join(d, 'Bee_Movie.txt')).read()
+text = open(path.join(d, 'test.txt')).read()
 
 # Generate a word cloud image
 wordcloud = WordCloud(width=1000, height=1000).generate(text)
