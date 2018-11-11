@@ -23,16 +23,11 @@ api = tweepy.API(auth)
 # Opening TXT file
 textFile = open('test.txt', 'w')
 
-# Initilizing the var for counting the grabbed tweets
-x = 0
-
-# Initilizing the var making sure the hibernating doesn't get stuck
-y = 0
-
 # Taking user input
 userIn = str(input("What would you like to stream on twitter?\n"))
+userIn2 = int(input("How many tweets would you like to stream?\n"))
 
-# setting up logic for the stream listner
+# Setting up logic for the stream listner
 class StreamListener(tweepy.StreamListener):
     # Init local variable for counting
     z = 0
@@ -42,7 +37,7 @@ class StreamListener(tweepy.StreamListener):
         print(status.text)
         textFile.write(status.text)
         self.z += 1
-        if self.z > 1000:
+        if self.z > userIn2:
             print("\n\n")
             print("--------------------------------------")
             print("One moment please, drawing word cloud!")
