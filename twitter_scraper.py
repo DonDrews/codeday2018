@@ -28,8 +28,12 @@ for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
     # Write a row to the CSV file
     csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
     print(tweet.text)
+    print("\n")
+
+    # Only taking in 2000 tweets for anaylising with word map
     x += 1
     if x == 2000:
         break
 
+# Closing the CSV file
 csvFile.close()
