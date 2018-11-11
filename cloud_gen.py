@@ -2,6 +2,7 @@ import tweepy
 import re
 import os
 import time
+import matplotlib.pyplot as plts
 from os import path
 from wordcloud import WordCloud
 
@@ -16,11 +17,14 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, acces_secret)
 api = tweepy.API(auth)
 
-# Opening CSV file
+# Opening TXT file
 textFile = open('test.txt', 'w')
 
 # Initilizing the var for counting the grabbed tweets
 x = 0
+
+# Initilizing the var making sure the hibernating doesn't get stuck
+y = 0
 
 # Taking user input
 userIn = str(input("What would you like to stream on twitter?\n"))
@@ -40,15 +44,17 @@ while True:
                 break
     # If tweepy throws the 429 error(which it usually does after seraching), this excpet will sleep the program until it's ready to go
     except tweepy.TweepError:
-        time.sleep(.5)
+        time.sleep(.1)
         print("One Moment Please, Hibernating")
-        continue
+        y += 1
+        if y == 10:
+            break
     # This will stop the loop if this condition is meet
     except StopIteration:
         break
 
 # Closing the text file
-textFile.close()
+textFile.close()import matplotlib.pyplot as plt
 
 # Opening new text files
 file = open('test.txt', 'r')
@@ -101,7 +107,6 @@ wordcloud = WordCloud(width=1000, height=1000, collocations=False).generate(text
 
 # Display the generated image:
 # The matplotlib way:
-import matplotlib.pyplot as plt
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
