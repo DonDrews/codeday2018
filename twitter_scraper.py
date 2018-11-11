@@ -13,10 +13,11 @@ auth.set_access_token(access_token, acces_secret)
 api = tweepy.API(auth)
 
 # Opening CSV file
-csvFile = open('twitDB.csv', 'w')
+#csvFile = open('twitDB.csv', 'w')
+textFile = open('test.txt', 'w')
 
 # Use CSV writer
-csvWriter = csv.writer(csvFile)
+#csvWriter = csv.writer(csvFile)
 
 # Initilizing the var for counting the grabbed tweets
 x = 0
@@ -27,7 +28,8 @@ userIn = str(input("What would you like to stream on twitter?"))
 # Grabbing all tweets based on the query search and the language
 for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
     # Write a row to the CSV file
-    csvWriter.writerow([tweet.text.encode('utf-8')])
+    #csvWriter.writerow([tweet.text.encode('utf-8')])
+    textFile.write(tweet.text)
     print(tweet.text)
     print("\n")
 
@@ -37,4 +39,5 @@ for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
         break
 
 # Closing the CSV file
-csvFile.close()
+#csvFile.close()
+textFile.close()
