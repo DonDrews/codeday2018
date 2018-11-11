@@ -1,8 +1,9 @@
 polished_words = []
 
-file = open('banned_words_for_bad_people.txt')
+file = open('twitDB.csv', 'r')
+fp = open('twitDB(-B).txt', 'w')
 for line in file:
-    trimmed = line.rstrip().split(" ")[0]
+    trimmed = line.rstrip().split(("b"))[1]
     trimmed = trimmed.split("\t")[0]
     found = False
     for word in polished_words:
@@ -13,3 +14,8 @@ for line in file:
 
 for finalword in polished_words:
     print(finalword)
+    fp.write(str(finalword))
+    fp.write("\n")
+
+file.close()
+fp.close()

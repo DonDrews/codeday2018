@@ -1,5 +1,4 @@
 import tweepy
-import time
 import csv
 
 # Store OAuth authentication credentials in relevant variables
@@ -22,8 +21,11 @@ csvWriter = csv.writer(csvFile)
 # Initilizing the var for counting the grabbed tweets
 x = 0
 
+# Taking user input
+userIn = str(input("What would you like to stream on twitter?"))
+
 # Grabbing all tweets based on the query search and the language
-for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
+for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
     # Write a row to the CSV file
     csvWriter.writerow([tweet.text.encode('utf-8')])
     print(tweet.text)
