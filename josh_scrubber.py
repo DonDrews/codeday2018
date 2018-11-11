@@ -1,6 +1,7 @@
 polished_words = []
 
-file = open('banned_words_for_bad_people.txt')
+file = open('banned_words_for_bad_people.txt', 'r')
+fp = open('nyeh.txt', 'w')
 for line in file:
     trimmed = line.rstrip().split(" ")[0]
     trimmed = trimmed.split("\t")[0]
@@ -13,3 +14,7 @@ for line in file:
 
 for finalword in polished_words:
     print(finalword)
+    fp.write(finalword)
+    fp.write('\n')
+
+fp.close()
