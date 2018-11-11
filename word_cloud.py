@@ -3,7 +3,7 @@
 Minimal Example
 ===============
 
-Generating a square wordcloud from the US constitution using default arguments.
+Generating a square wordcloud from the Bee Movie using default arguments.
 """
 
 import os
@@ -15,7 +15,7 @@ from wordcloud import WordCloud
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 # Read the whole text.
-text = open(path.join(d, 'constitution.txt')).read()
+text = open(path.join(d, 'Bee_Movie.txt')).read()
 
 # Generate a word cloud image
 wordcloud = WordCloud(width=1000, height=1000).generate(text)
