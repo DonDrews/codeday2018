@@ -1,5 +1,4 @@
 import tweepy
-import csv
 
 # Store OAuth authentication credentials in relevant variables
 consumer_key = 'nj3wTygQk1eJCAflALgUCCKvI'
