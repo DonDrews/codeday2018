@@ -16,14 +16,24 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, acces_secret)
 api = tweepy.API(auth)
 
-csvFile = open('twitDB.csv', 'a')
+# Opening CSV file
+csvFile = open('twitDB.csv', 'w')
 
-# Use csv writer
+# Use CSV writer
 csvWriter = csv.writer(csvFile)
 
-for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
+x = 0
 
+for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
     # Write a row to the CSV file
-    csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
+    csvWriter.writerow([tweet.text.encode('utf-8')])
     print(tweet.text)
+    print("\n")
+
+    # Only taking in 2000 tweets for anaylising with word map
+    x += 1
+    if x == 2000:
+        break
+
+# Closing the CSV file
 csvFile.close()
