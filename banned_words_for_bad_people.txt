@@ -9,7 +9,8 @@ for
 on
 under
 across
-beside(s)
+beside
+besides
 from
 onto
 underneath
@@ -80,7 +81,7 @@ become (inchoative) "Tom became wealthy."
 bleed "We all bleed red."[1]
 come "The prediction came true;" "the belt came loose;" "the characters in the story come alive"
 come out "It came out burnt."
-constitute[2] "Verbs constitute one of the main word classes in the English language"
+constitute "Verbs constitute one of the main word classes in the English language"
 emerge "Tom emerged unharmed after the incident."
 end up "I ended up broke;" "the room ended up a mess."
 die "He died poor."[1]
