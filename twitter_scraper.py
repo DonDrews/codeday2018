@@ -26,7 +26,7 @@ x = 0
 
 for tweet in tweepy.Cursor(api.search, q = "AI", lang = "en").items():
     # Write a row to the CSV file
-    csvWriter.writerow([tweet.created_at, tweet.text.encode('utf-8')])
+    csvWriter.writerow([tweet.text.encode('utf-8')])
     print(tweet.text)
     print("\n")
 
