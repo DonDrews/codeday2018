@@ -1,6 +1,7 @@
 import tweepy
 import re
 import os
+import time
 from os import path
 from wordcloud import WordCloud
 
@@ -24,16 +25,26 @@ x = 0
 # Taking user input
 userIn = str(input("What would you like to stream on twitter?\n"))
 
-# Grabbing all tweets based on the query search and the language
-for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
-    # Write to a text
-    textFile.write(tweet.text)
-    print(tweet.text)
-    print("\n")
-
-    # Only taking in 2000 tweets for anaylising with word map
-    x += 1
-    if x == 2000:
+# This loop take into account any errors that tweepy with throw and sleep until the tweets are replenishable
+while True:
+    try:
+        # Grabbing all tweets based on the query search and the language
+        for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
+            # Write to a text
+            textFile.write(tweet.text)
+            print(tweet.text)
+            print("\n")
+            # Only taking in 2000 tweets for anaylising with word map
+            x += 1
+            if x == 2000:
+                break
+    # If tweepy throws the 429 error(which it usually does after seraching), this excpet will sleep the program until it's ready to go
+    except tweepy.TweepError:
+        time.sleep(.5)
+        print("One Moment Please, Hibernating")
+        continue
+    # This will stop the loop if this condition is meet
+    except StopIteration:
         break
 
 # Closing the text file

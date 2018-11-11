@@ -1,5 +1,7 @@
 about
 gt
+amp
+don
 below
 off
 toward
