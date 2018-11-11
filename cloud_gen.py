@@ -2,9 +2,12 @@ import tweepy
 import re
 import os
 import time
-import matplotlib.pyplot as plts
+import matplotlib.pyplot as plt
 from os import path
 from wordcloud import WordCloud
+from tweepy.streaming import StreamListener
+from tweepy import OAuthHandler
+from tweepy import Stream
 
 # Store OAuth authentication credentials in relevant variables
 consumer_key = 'nj3wTygQk1eJCAflALgUCCKvI'
@@ -29,32 +32,41 @@ y = 0
 # Taking user input
 userIn = str(input("What would you like to stream on twitter?\n"))
 
-# This loop take into account any errors that tweepy with throw and sleep until the tweets are replenishable
-while True:
-    try:
-        # Grabbing all tweets based on the query search and the language
-        for tweet in tweepy.Cursor(api.search, q = userIn, lang = "en").items():
-            # Write to a text
-            textFile.write(tweet.text)
-            print(tweet.text)
-            print("\n")
-            # Only taking in 2000 tweets for anaylising with word map
-            x += 1
-            if x == 2000:
-                break
-    # If tweepy throws the 429 error(which it usually does after seraching), this excpet will sleep the program until it's ready to go
-    except tweepy.TweepError:
-        time.sleep(.1)
-        print("One Moment Please, Hibernating")
-        y += 1
-        if y == 10:
-            break
-    # This will stop the loop if this condition is meet
-    except StopIteration:
-        break
+# setting up logic for the stream listner
+class StreamListener(tweepy.StreamListener):
+    # Init local variable for counting
+    z = 0
+
+    # Streaming tweets and keeping track
+    def on_status(self, status):
+        print(status.text)
+        textFile.write(status.text)
+        self.z += 1
+        if self.z > 1000:
+            print("\n\n")
+            print("--------------------------------------")
+            print("One moment please, drawing word cloud!")
+            print("--------------------------------------")
+            print("\n\n")
+            return False
+        return True
+
+    def on_error(self, status_code):
+        if status_code == 420:
+            return False
+
+    def on_error(self, status_code):
+        if status_code == 429:
+            return False
+
+# Listening for tweets
+stream_listener = StreamListener()
+stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
+stream.filter(track=[userIn], languages=["en"])
+
 
 # Closing the text file
-textFile.close()import matplotlib.pyplot as plt
+textFile.close()
 
 # Opening new text files
 file = open('test.txt', 'r')
@@ -89,6 +101,7 @@ for l in lines:
 # Setting up file out put to be read
 output = open('mapme.txt', 'w')
 
+# Sending banned words to the list
 for w in words:
     output.write(w)
     output.write('\n')
