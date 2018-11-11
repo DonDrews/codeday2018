@@ -12,19 +12,25 @@ for line in bannedFile:
 
 #replace all special chars with spaces
 for line in file:
-    line = re.sub('[^A-Za-z0-9]', ' ', line)
+    line = re.sub('[^A-Za-z0-9@]', ' ', line)
     lines.append(line)
 
 words = []
 for l in lines:
-    ws = l.split(' ')
-    if ws != "":
-        found = False
-        for b in banned:
-            if ws == b:
-                found = True
-        if not found:
-            words.append(ws)
+    wordList = l.split(' ')
+    for ws in wordList:
+        if ws != "" and not '@' in ws:
+            found = False
+            for b in banned:
+                if ws.lower().rstrip() == b.lower().rstrip():
+                    found = True
+            if not found:
+                words.append(ws.lower())
+
+output = open('mapme.txt', 'w')
 
 for w in words:
-    print(w)
+    output.write(w)
+    output.write('\n')
+
+output.close()

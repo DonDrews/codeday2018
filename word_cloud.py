@@ -15,10 +15,10 @@ from wordcloud import WordCloud
 d = path.dirname(__file__) if "__file__" in locals() else os.getcwd()
 
 # Read the whole text.
-text = open(path.join(d, 'test.txt')).read()
+text = open(path.join(d, 'mapme.txt')).read()
 
 # Generate a word cloud image
-wordcloud = WordCloud(width=1000, height=1000).generate(text)
+wordcloud = WordCloud(width=1000, height=1000, collocations=False).generate(text)
 
 # Display the generated image:
 # the matplotlib way:
