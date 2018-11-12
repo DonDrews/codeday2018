@@ -73,24 +73,32 @@ lines = []
 # Setting up a blank list
 banned = []
 
+#read out file of banned words into list
 for line in bannedFile:
     banned.append(line)
 
-# Replace all special chars with spaces
+# Replace all special chars with spaces using regex
+# Except "@" - needed later to remove user handles
 for line in file:
     line = re.sub('[^A-Za-z0-9@]', ' ', line)
     lines.append(line)
 
+#create a new list to hold all words in all tweets
 words = []
 for l in lines:
+    #for each line in tweet document, split into list of words based on spaces
     wordList = l.split(' ')
     for ws in wordList:
+        #for each word, skip if it is empty (multiple spaces in a row would create this)
+        #skip if word contains "@" (a user handle)
         if ws != "" and not '@' in ws:
             found = False
             for b in banned:
-                if ws.lower().rstrip() == b.lower().rstrip():
+                #if the word matches anything in the banned list, regardless of case, skip it 
+                if ws.lower().rstrip() == b.lower().rstrip(): #why is rstrip here? Newlines?
                     found = True
             if not found:
+                #add to the empty list if the word is valid
                 words.append(ws.lower())
 
 # Setting up file out put to be read
@@ -118,16 +126,3 @@ wordcloud = WordCloud(width=1000, height=1000, collocations=False).generate(text
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
-
-# Lower max_font_size
-'''
-wordcloud = WordCloud(max_font_size=40).generate(text)
-plt.figure()
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-plt.show()
-'''
-
-# The pil way (if you don't have matplotlib)
-# image = wordcloud.to_image()
-# image.show()
